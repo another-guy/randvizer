@@ -39,7 +39,7 @@ export class AppComponent implements OnChanges, AfterViewInit {
 
     const canvasWidth = 1350;
     const canvasHeight = 300;
-    const radScale = 15;
+    const radScale = 1;
 
     const randomItems = [];
     for (let counter = 1; counter < canvasWidth * canvasHeight; counter++) {
@@ -58,14 +58,24 @@ export class AppComponent implements OnChanges, AfterViewInit {
         .attr('style', 'border: 1px dotted black')
         .attr("width", canvasWidth)
         .attr("height", canvasHeight)
-      .selectAll('circle')
+      //.selectAll('circle')
+      .selectAll('rect')
+
       .data(data)
       .enter()
-      .append('circle')
+      // .append('circle')
+      //   .attr("fill", d => numberInRangeToRgb(d.value, 0, maxValue))
+      //   .attr("r", radScale)
+      //   .attr("cx", d => radScale + (2 * radScale * d.column))
+      //   .attr("cy", d => radScale + (2 * radScale * d.row))
+
+      .append('rect')
         .attr("fill", d => numberInRangeToRgb(d.value, 0, maxValue))
-        .attr("r", radScale)
-        .attr("cx", d => radScale + (2 * radScale * d.column))
-        .attr("cy", d => radScale + (2 * radScale * d.row));
+        .attr("x", d => d.column * radScale)
+        .attr("y", d => d.row * radScale)
+        .attr("width", radScale)
+        .attr("height", radScale)
+      ;
   }
 
   tabularize(data: DataPoint[], rowLength: number): DataPoint[] {
