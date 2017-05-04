@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { numberInRangeToRgb } from 'app/colors';
 import * as d3 from 'd3';
 
@@ -17,32 +17,35 @@ export class AppComponent implements OnChanges, AfterViewInit {
   @ViewChild('canvas') canvas: ElementRef;
   private canvasElement: HTMLElement;
   private host: d3Selection<HTMLElement>;
-  private svgSelection: d3Selection<Element | d3.EnterElement | Document | Window >;
+
+  @Input() radScale: number = 9;
+  @Input() desiredCanvasWidth = 300;
+  @Input() desiredCanvasHeight = 300;
+  
+  get nFitHoriz(): number { return Math.floor(this.desiredCanvasWidth / this.radScale); }
+  get nFitVert(): number { return Math.floor(this.desiredCanvasHeight / this.radScale); }
+  get actualCanvasWidth(): number { return this.nFitHoriz * this.radScale; }
+  get actualCanvasHeight(): number { return this.nFitVert * this.radScale; }
+  get total(): number { return this.nFitHoriz * this.nFitVert; }
 
   ngAfterViewInit(): void {
     this.canvasElement = this.canvas.nativeElement;
     this.host = d3.select(this.canvasElement);
 
-    this.redo();
+    this.recalculate();
   }
 
   ngOnChanges(): void {
-    this.redo();
+    this.recalculate();
   }
 
-  private redo(): void {
+  private recalculate(): void {
     this.drawImageRepresentation();
-    //this.drawTable();
   }
 
   private drawImageRepresentation(): void {
-
-    const canvasWidth = 1350;
-    const canvasHeight = 300;
-    const radScale = 1;
-
     const randomItems = [];
-    for (let counter = 1; counter < canvasWidth * canvasHeight; counter++) {
+    for (let counter = 1; counter < this.total; counter++) {
       randomItems.push(Math.round(Math.random() * maxValue));
     }
     const rawRandoms = randomItems
@@ -51,31 +54,23 @@ export class AppComponent implements OnChanges, AfterViewInit {
         column: index,
         row: 0
       });
-    const data = this.tabularize(rawRandoms, canvasWidth);
+    const data = this.tabularize(rawRandoms, this.nFitHoriz);
 
+    this.host.select("svg").remove();
     this.host
       .append("svg:svg")
         .attr('style', 'border: 1px dotted black')
-        .attr("width", canvasWidth)
-        .attr("height", canvasHeight)
-      //.selectAll('circle')
+        .attr("width", this.actualCanvasWidth)
+        .attr("height", this.actualCanvasHeight)
       .selectAll('rect')
-
       .data(data)
       .enter()
-      // .append('circle')
-      //   .attr("fill", d => numberInRangeToRgb(d.value, 0, maxValue))
-      //   .attr("r", radScale)
-      //   .attr("cx", d => radScale + (2 * radScale * d.column))
-      //   .attr("cy", d => radScale + (2 * radScale * d.row))
-
       .append('rect')
         .attr("fill", d => numberInRangeToRgb(d.value, 0, maxValue))
-        .attr("x", d => d.column * radScale)
-        .attr("y", d => d.row * radScale)
-        .attr("width", radScale)
-        .attr("height", radScale)
-      ;
+        .attr("x", d => d.column * this.radScale)
+        .attr("y", d => d.row * this.radScale)
+        .attr("width", this.radScale)
+        .attr("height", this.radScale);
   }
 
   tabularize(data: DataPoint[], rowLength: number): DataPoint[] {
@@ -86,38 +81,6 @@ export class AppComponent implements OnChanges, AfterViewInit {
         value: item.value
       });
   }
-
-  // private drawTable(): void {
-  //   var dataset = [];
-  //   for (let i = 0; i < 5; i++) {
-  //     var tmpDataset = []
-  //     for (let j = 0; j < 3; j++) {
-  //       tmpDataset.push("Row:" + i + ",Col:" + j);
-  //     }
-  //     dataset.push(tmpDataset);
-  //   }
-
-  //   this.host
-  //   .append("table")
-  //   .style("border-collapse", "collapse")
-  //   .style("border", "2px black solid")
-    
-  //   .selectAll("tr")
-  //   .data(dataset)
-  //   .enter()
-  //   .append("tr")
-    
-  //   .selectAll("td")
-  //   .data(d => d)
-  //   .enter()
-  //   .append("td")
-  //   .style("border", "1px black solid")
-  //   .style("padding", "10px")
-  //   .on("mouseover", function(){d3.select(this).style("background-color", "aliceblue")})
-  //   .on("mouseout", function(){d3.select(this).style("background-color", "white")})
-  //   .text(d => <string>d)
-  //   .style("font-size", "12px");
-  // }
 }
 
 export class DataPoint {

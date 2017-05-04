@@ -1,6 +1,36 @@
-<h1>{{title}}</h1>
+<h1 style="display: inline-block">{{title}} :</h1>
+<h2 style="display: inline-block">Visualize Random Number Sequences To Detect Anomalies</h2>
 
-<h2>Visualize Random Number Sequences To Detect Anomalies</h2>
+<div>
+  <span>
+    <label for="radScale">Pixel Size</label>
+    <input id="radScale" [(ngModel)]="radScale">
+  </span>
+
+  <span>
+    <label for="desiredCanvasWidth">W</label>
+    <input id="desiredCanvasWidth" [(ngModel)]="desiredCanvasWidth">
+  </span>
+
+  <span>
+    <label for="desiredCanvasHeight">H</label>
+    <input id="desiredCanvasHeight" [(ngModel)]="desiredCanvasHeight">
+  </span>
+
+  <span>
+    <button (click)="recalculate()">Recalculate</button>
+  </span>
+</div>
+
+<div>
+  Data items dimensions: {{ nFitHoriz }}x{{ nFitVert }}
+</div>
+<div>
+  Actual canvas size: {{ actualCanvasWidth }}x{{ actualCanvasHeight }}
+</div>
+<div>
+  Total items count: {{ total }}
+</div>
 
 <div #canvas class="example_div">
 </div>
