@@ -1,24 +1,24 @@
 <h1 style="display: inline-block">{{title}} :</h1>
 <h2 style="display: inline-block">Visualize Random Number Sequences To Detect Anomalies</h2>
 
-<div>
-  <span>
+<div class="row">
+  <span class="col-md-3">
     <label for="radScale">Pixel Size</label>
-    <input id="radScale" [(ngModel)]="radScale">
+    <input class="form-control" id="radScale" [(ngModel)]="radScale">
   </span>
 
-  <span>
+  <span class="col-md-3">
     <label for="desiredCanvasWidth">W</label>
-    <input id="desiredCanvasWidth" [(ngModel)]="desiredCanvasWidth">
+    <input class="form-control" id="desiredCanvasWidth" [(ngModel)]="desiredCanvasWidth">
   </span>
 
-  <span>
+  <span class="col-md-3">
     <label for="desiredCanvasHeight">H</label>
-    <input id="desiredCanvasHeight" [(ngModel)]="desiredCanvasHeight">
+    <input class="form-control" id="desiredCanvasHeight" [(ngModel)]="desiredCanvasHeight">
   </span>
 
-  <span>
-    <button (click)="recalculate()">Recalculate</button>
+  <span class="col-md-3">
+    <button class="btn btn-primary btn-lg" (click)="recalculate()">Recalculate</button>
   </span>
 </div>
 
