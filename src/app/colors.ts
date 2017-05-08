@@ -1,3 +1,9 @@
+/*
+  http://stackoverflow.com/a/2376159/482868
+  http://www.efg2.com/Lab/ScienceAndEngineering/Spectra.htm
+  http://www.physics.sfasu.edu/astro/color.html
+*/
+
 export function numberInRangeToRgb(value: number, min: number, max: number): string {
   const waveLength = waveLengthFromDataPoint(value, min, max);
   const rgb = waveLengthToRGB(waveLength);

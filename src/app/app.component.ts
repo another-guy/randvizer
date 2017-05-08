@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
+import { Http } from '@angular/http';
 import { numberInRangeToRgb } from 'app/colors';
 import * as d3 from 'd3';
 
@@ -22,11 +23,14 @@ export class AppComponent implements OnChanges, AfterViewInit {
   @Input() desiredCanvasWidth = 300;
   @Input() desiredCanvasHeight = 300;
   
+  private randoms: number[] = [];
   get nFitHoriz(): number { return Math.floor(this.desiredCanvasWidth / this.radScale); }
   get nFitVert(): number { return Math.floor(this.desiredCanvasHeight / this.radScale); }
   get actualCanvasWidth(): number { return this.nFitHoriz * this.radScale; }
   get actualCanvasHeight(): number { return this.nFitVert * this.radScale; }
   get total(): number { return this.nFitHoriz * this.nFitVert; }
+
+  constructor(private _http: Http) { }
 
   ngAfterViewInit(): void {
     this.canvasElement = this.canvas.nativeElement;
@@ -44,11 +48,11 @@ export class AppComponent implements OnChanges, AfterViewInit {
   }
 
   private drawImageRepresentation(): void {
-    const randomItems = [];
-    for (let counter = 1; counter < this.total; counter++) {
-      randomItems.push(Math.round(Math.random() * maxValue));
+    if (!this.randoms || this.randoms.length <= 0) {
+      this.randoms = this.generateRandoms();
     }
-    const rawRandoms = randomItems
+
+    const rawRandoms = this.randoms
       .map((item, index) => <DataPoint>{
         value: item,
         column: index,
@@ -73,6 +77,14 @@ export class AppComponent implements OnChanges, AfterViewInit {
         .attr("height", this.radScale);
   }
 
+  private generateRandoms(): number[] {
+    const randomItems = [];
+    for (let counter = 1; counter < this.total; counter++) {
+      randomItems.push(Math.round(Math.random() * maxValue));
+    }
+    return randomItems;
+  }
+
   tabularize(data: DataPoint[], rowLength: number): DataPoint[] {
     return data.map((item, index) =>
       <DataPoint>{
@@ -80,6 +92,20 @@ export class AppComponent implements OnChanges, AfterViewInit {
         row: Math.floor(index / rowLength),
         value: item.value
       });
+  }
+
+  fileChange(event: any): void {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      const fileReader = new FileReader();
+      fileReader.onload = dataRead => {
+        const dataRetrieved = <number[]>JSON.parse(fileReader.result);
+        this.randoms = dataRetrieved;
+      };
+
+      const file: File = fileList[0];
+      fileReader.readAsText(file);
+    }
   }
 }
 

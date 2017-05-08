@@ -2,23 +2,25 @@
 <h2 style="display: inline-block">Visualize Random Number Sequences To Detect Anomalies</h2>
 
 <div class="row">
-  <span class="col-md-3">
+  <span class="col-md-2">
     <label for="radScale">Pixel Size</label>
     <input class="form-control" id="radScale" [(ngModel)]="radScale">
   </span>
 
-  <span class="col-md-3">
+  <span class="col-md-2">
     <label for="desiredCanvasWidth">W</label>
     <input class="form-control" id="desiredCanvasWidth" [(ngModel)]="desiredCanvasWidth">
   </span>
 
-  <span class="col-md-3">
+  <span class="col-md-2">
     <label for="desiredCanvasHeight">H</label>
     <input class="form-control" id="desiredCanvasHeight" [(ngModel)]="desiredCanvasHeight">
   </span>
 
-  <span class="col-md-3">
+  <span class="col-md-4">
     <button class="btn btn-primary btn-lg" (click)="recalculate()">Recalculate</button>
+
+    <label class="btn btn-primary btn-lg btn-file">Browse <input type="file" hidden (change)="fileChange($event)" accept=".txt,.rnd"></label>
   </span>
 </div>
 
