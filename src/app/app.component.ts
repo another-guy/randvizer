@@ -24,7 +24,14 @@ export class AppComponent implements AfterViewInit {
   private canvasCalculator = new CanvasCalculator();
 
   private randoms: number[] = [];
+  
   get virtualPixelSize(): number { return this.canvasCalculator.virtualPixelSize; }
+  set virtualPixelSize(newValue: number) { this.canvasCalculator.virtualPixelSize = newValue; }
+  get desiredCanvasWidthPx(): number { return this.canvasCalculator.desiredCanvasWidthPx; }
+  set desiredCanvasWidthPx(newValue: number) { this.canvasCalculator.desiredCanvasWidthPx = newValue; }
+  get desiredCanvasHeightPx(): number { return this.canvasCalculator.desiredCanvasHeightPx; }
+  set desiredCanvasHeightPx(newValue: number) { this.canvasCalculator.desiredCanvasHeightPx = newValue; }
+
   get totalVirtualPixelHorizontalCount(): number { return this.canvasCalculator.totalVirtualPixelHorizontalCount; }
   get totalVirtualPixelVerticalCount(): number { return this.canvasCalculator.totalVirtualPixelVerticalCount; }
   get actualCanvasWidthPx(): number { return this.canvasCalculator.actualCanvasWidthPx; }
@@ -40,7 +47,7 @@ export class AppComponent implements AfterViewInit {
     this.recalculate();
   }
 
-  private recalculate(): void {
+  recalculate(): void {
     if (!this.randoms || this.randoms.length !== this.virtualPixelTotalCount) {
       this.generateRandoms();
     }

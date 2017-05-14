@@ -5,22 +5,22 @@
   <div class="row">
     <p class="col-md-2">
       <label for="virtualPixelSize">Pixel Size</label>
-      <input class="form-control number" type="number" min="1" id="virtualPixelSize" [(ngModel)]="canvasCalculator.virtualPixelSize">
+      <input class="form-control number" type="number" min="1" id="virtualPixelSize" [(ngModel)]="virtualPixelSize">
     </p>
 
     <p class="col-md-2">
       <label for="desiredCanvasWidthPx">W</label>
-      <input class="form-control number" type="number" min="1" id="desiredCanvasWidthPx" [(ngModel)]="canvasCalculator.desiredCanvasWidthPx">
+      <input class="form-control number" type="number" min="1" id="desiredCanvasWidthPx" [(ngModel)]="desiredCanvasWidthPx">
     </p>
 
     <p class="col-md-2">
       <label for="desiredCanvasHeightPx">H</label>
-      <input class="form-control number" type="number" min="1" id="desiredCanvasHeightPx" [(ngModel)]="canvasCalculator.desiredCanvasHeightPx">
+      <input class="form-control number" type="number" min="1" id="desiredCanvasHeightPx" [(ngModel)]="desiredCanvasHeightPx">
     </p>
 
     <p class="col-md-4">
-      <button class="btn btn-primary btn-lg" (click)="recalculate()" [disabled]="busy">Recalculate</button>
-      <label class="btn btn-primary btn-lg btn-file">From File <input type="file" hidden (change)="fileChange($event)" accept=".txt,.rnd" [disabled]="busy"></label>
+      <button class="btn btn-primary btn-lg" (click)="recalculate()">Recalculate</button>
+      <label class="btn btn-primary btn-lg btn-file">From File <input type="file" hidden (change)="fileChange($event)" accept=".txt,.rnd"></label>
     </p>
   </div>
 
