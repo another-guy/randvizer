@@ -3,7 +3,6 @@ export class CanvasCalculator {
   get virtualPixelSize(): number { return this._virtualPixelSize; }
   set virtualPixelSize(newValue: number) {
     if (newValue < 0) {
-      console.warn(newValue);
       return;
     }
     this._virtualPixelSize = newValue;
@@ -13,7 +12,6 @@ export class CanvasCalculator {
   get desiredCanvasWidthPx(): number { return this._desiredCanvasWidthPx; }
   set desiredCanvasWidthPx(newValue: number) {
     if (newValue < 1) {
-      console.warn(newValue);
       return;
     }
     this._desiredCanvasWidthPx = newValue;
@@ -23,7 +21,6 @@ export class CanvasCalculator {
   get desiredCanvasHeightPx(): number { return this._desiredCanvasHeightPx; }
   set desiredCanvasHeightPx(newValue: number) {
     if (newValue < 1) {
-      console.warn(newValue);
       return;
     }
     this._desiredCanvasHeightPx = newValue;

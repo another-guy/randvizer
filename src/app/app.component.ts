@@ -81,7 +81,6 @@ export class AppComponent implements AfterViewInit {
       // TODO Don't process way too large files or read it in parts...
       const fileReader = new FileReader();
       fileReader.onload = dataRead => {
-        console.warn(`${(<string>fileReader.result).substring(0, 30)}`);
         this.randoms = <number[]>JSON.parse(fileReader.result);
 
         const lengthOfData = this.randoms.length;
