@@ -1,6 +1,7 @@
 .btn-file {
     position: relative;
     overflow: hidden;
+    margin-bottom: 0;
 }
 
 .btn-file input[type=file] {
@@ -17,4 +18,9 @@
     background: white;
     cursor: inherit;
     display: block;
+}
+
+.number {
+    display: inline-block;
+    max-width: 90px;
 }
