@@ -19,17 +19,22 @@ However, it's often easier for human beings to perceive a visualized result to g
 Here are two images which explain two visualized random sequences.
 It's easy to see how the first picture contains some regularities which make it worse compared to the second picture.
 
-![Weak Randomness](https://github.com/another-guy/randvizer/raw/master/doc/img/BadRandomSequence.png)
-
-![Strong Randomness](https://github.com/another-guy/randvizer/raw/master/doc/img/GoodRandomSequence.png)
-
+| Weak Randomness        | Strong Randomnessl  |
+|:-------------:|:-------------:|
+| ![Weak Randomness](https://github.com/another-guy/randvizer/raw/master/doc/img/BadRandomSequence.png) | ![Strong Randomness](https://github.com/another-guy/randvizer/raw/master/doc/img/GoodRandomSequence.png) |
 
 ## Installation
+
+1. Clone the repository
+
+2. Run the following commands
 
 ```
 npm install
 ng serve
 ```
+
+3. Open the project in browser
 
 Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
