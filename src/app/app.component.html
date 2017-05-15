@@ -18,9 +18,25 @@
       <input class="form-control number" type="number" min="1" id="desiredCanvasHeightPx" [(ngModel)]="desiredCanvasHeightPx">
     </p>
 
-    <p class="col-md-4">
-      <button class="btn btn-primary btn-lg" (click)="recalculate()">Recalculate</button>
-      <label class="btn btn-primary btn-lg btn-file">From File <input type="file" hidden (change)="fileChange($event)" accept=".txt,.rnd"></label>
+    <p class="col-md-3">
+      <button
+        class="btn btn-primary btn-lg"
+        (click)="recalculate()">Generate</button>
+
+      <small class="form-text text-muted">Create a sequence via JavaScript's Math.random()</small>
+    </p>
+
+    <p class="col-md-3">
+      <label class="btn btn-primary btn-lg btn-file">Upload
+        <input
+          type="file"
+          hidden
+          (change)="fileChange($event)" accept=".txt,.json">
+      </label>
+
+      <small class="form-text text-muted">
+        Visualize random sequence from the provided file.
+        The file has to contain JSON array of integer numbers, i.e. [3,1,-4,0,10]</small>
     </p>
   </div>
 
@@ -29,6 +45,10 @@
       <div #canvas class="example_div"></div>
     </div>
     <div class="col-md-4">
+      <p>
+        <span *ngIf="currentFileName">Showing from {{currentFileName}}</span>
+        <span *ngIf="!currentFileName">Showing generated</span>
+      </p>
       <p>
         Actual Dimension (Virtual Pixels): {{ totalVirtualPixelHorizontalCount }}x{{ totalVirtualPixelVerticalCount }}
       </p>

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { CanvasCalculator } from 'app/canvas-calculator';
 import { Map1dto2d } from 'app/map-1d-to-2d';
@@ -20,6 +20,8 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('canvas') canvas: ElementRef;
   private canvasElement: HTMLElement;
   private host: d3Selection<HTMLElement>;
+
+  currentFileName: string = null;
   
   private canvasCalculator = new CanvasCalculator();
 
@@ -48,10 +50,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   recalculate(): void {
-    if (!this.randoms || this.randoms.length !== this.virtualPixelTotalCount) {
-      this.generateRandoms();
-    }
-
+    this.generateRandoms();
     this.drawImageRepresentation(maxRandomValue);
   }
 
@@ -76,6 +75,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   private generateRandoms(): void {
+    this.currentFileName = null;
     this.randoms = [];
     for (let counter = 1; counter <= this.virtualPixelTotalCount; counter++) {
       this.randoms.push(Math.round(Math.random() * maxRandomValue));
@@ -106,8 +106,14 @@ export class AppComponent implements AfterViewInit {
         this.drawImageRepresentation(Math.max(...this.randoms));
       };
 
+      const limit = 500000;
       const file: File = fileList[0];
-      fileReader.readAsText(file);
+      if (file.size < limit) {
+        this.currentFileName = file.name;
+        fileReader.readAsText(file);
+      } else {
+        alert(`The file ${file.name} is too large (${file.size}), current limit is ${limit}.`);
+      }
     }
   }
 }
