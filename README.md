@@ -19,7 +19,7 @@ However, it's often easier for human beings to perceive a visualized result to g
 Here are two images which explain two visualized random sequences.
 It's easy to see how the first picture contains some regularities which make it worse compared to the second picture.
 
-| Weak Randomness        | Strong Randomnessl  |
+| Weak Randomness | Strong Randomness |
 |:-------------:|:-------------:|
 | ![Weak Randomness](https://github.com/another-guy/randvizer/raw/master/doc/img/BadRandomSequence.png) | ![Strong Randomness](https://github.com/another-guy/randvizer/raw/master/doc/img/GoodRandomSequence.png) |
 
