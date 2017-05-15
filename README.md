@@ -1,8 +1,6 @@
 ## Synopsis
 
-[Randvizer](https://github.com/another-guy/randvizer)
-
-Visualize Random Number Sequences To Detect Anomalies.
+Try [Randvizer](http://soloydenko.com/randvizer/) online - Visualize Random Number Sequences To Detect Anomalies.
 
 ## Status
 
