@@ -1,7 +1,15 @@
-<div class="container">
-  <h1 style="display: inline-block">{{title}} :</h1>
-  <h2 style="display: inline-block">Visualize Random Number Sequences To Detect Anomalies</h2>
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+  <a class="navbar-brand" href="#">{{title}}</a>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <span class="nav-link" href="#">Visualize Random Number Sequences To Detect Anomalies</span>
+      </li>
+    </ul>
+  </div>
+</nav>
 
+<div class="container">
   <div class="row">
     <p class="col-md-2">
       <label for="virtualPixelSize">Pixel Size</label>
@@ -21,13 +29,18 @@
     <p class="col-md-3">
       <button
         class="btn btn-primary btn-lg"
-        (click)="recalculate()">Generate</button>
+        (click)="recalculate()">
+        <i class="fa fa-random" aria-hidden="true"></i>
+        Generate
+      </button>
 
       <small class="form-text text-muted">Create a sequence via JavaScript's Math.random()</small>
     </p>
 
     <p class="col-md-3">
-      <label class="btn btn-primary btn-lg btn-file">Upload
+      <label class="btn btn-primary btn-lg btn-file">
+        <i class="fa fa-upload" aria-hidden="true"></i>
+        Upload
         <input
           type="file"
           hidden
