@@ -71,6 +71,21 @@
       <p>
         Virtual Pixel Count: {{ virtualPixelTotalCount }}
       </p>
+      <p>
+        <button
+          class="btn btn-secondary btn-lg"
+          (click)="downloadSvg()">
+          <i class="fa fa-download" aria-hidden="true"></i>
+          Download as SVG
+        </button>
+        
+        <button
+          class="btn btn-secondary btn-lg"
+          (click)="downloadPng()">
+          <i class="fa fa-download" aria-hidden="true"></i>
+          Download as PNG
+        </button>
+      </p>
     </div>
   </div>
 </div>

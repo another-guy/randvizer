@@ -57,21 +57,20 @@ export class AppComponent implements AfterViewInit {
   private drawImageRepresentation(maxValue: number): void {
     const data = Map1dto2d.tabularize(this.randoms, this.totalVirtualPixelHorizontalCount);
 
-    this.host.select("svg").remove();
+    this.host.select('svg').remove();
     this.host
-      .append("svg:svg")
-        .attr('style', 'border: 1px dotted black')
-        .attr("width", this.actualCanvasWidthPx)
-        .attr("height", this.actualCanvasHeightPx)
+      .append('svg:svg')
+        .attr('width', this.actualCanvasWidthPx)
+        .attr('height', this.actualCanvasHeightPx)
       .selectAll('rect')
       .data(data)
       .enter()
       .append('rect')
-        .attr("fill", d => Spectra.numberInRangeToRgb(d.value, 0, maxValue))
-        .attr("x", d => d.column * this.virtualPixelSize)
-        .attr("y", d => d.row * this.virtualPixelSize)
-        .attr("width", this.virtualPixelSize)
-        .attr("height", this.virtualPixelSize);
+        .attr('fill', d => Spectra.numberInRangeToRgb(d.value, 0, maxValue))
+        .attr('x', d => d.column * this.virtualPixelSize)
+        .attr('y', d => d.row * this.virtualPixelSize)
+        .attr('width', this.virtualPixelSize)
+        .attr('height', this.virtualPixelSize);
   }
 
   private generateRandoms(): void {
@@ -115,5 +114,55 @@ export class AppComponent implements AfterViewInit {
         alert(`The file ${file.name} is too large (${file.size}), current limit is ${limit}.`);
       }
     }
+  }
+
+  downloadSvg(): void {
+    this.saveFileUsingEphemeralAnchorTag(this.svgUrl, 'image.svg');
+  }
+
+  downloadPng(): void {
+    const tmpImgSelection = d3
+      .select('body')
+      .append('img')
+      .attr('width', this.actualCanvasWidthPx)
+      .attr('height', this.actualCanvasHeightPx)
+      .attr('src', this.svgUrl)
+      .style('display', 'none');
+    const tmpImgElement = <HTMLImageElement>tmpImgSelection.node();
+    tmpImgElement.onload = () => {
+      const tmpCanvas = d3
+        .select('body')
+        .append('canvas')
+        .attr('width', this.actualCanvasWidthPx)
+        .attr('height', this.actualCanvasHeightPx)
+        .style('display', 'none');
+      const tmpCanvasElement = <HTMLCanvasElement>tmpCanvas.node();
+      const context = tmpCanvasElement.getContext('2d');
+      context.drawImage(tmpImgElement, 0, 0);
+
+      this.saveFileUsingEphemeralAnchorTag(tmpCanvasElement.toDataURL('image/png'), 'image.png');
+      
+      tmpCanvas.remove();
+      tmpImgSelection.remove();
+    };
+  }
+
+  private get svgUrl(): string {
+    const svgElement = document.getElementsByTagName('svg')[0];
+    const svgAsBlob = new Blob(
+      [ new XMLSerializer().serializeToString(svgElement) ],
+      { type: 'image/svg+xml;charset=utf-8' }
+    );
+    return URL.createObjectURL(svgAsBlob);
+  }
+
+  private saveFileUsingEphemeralAnchorTag(dataUrl: string, fileName: string): void {
+    const downloadLink = document.createElement('a');
+    downloadLink.href = dataUrl;
+    downloadLink.download = fileName;
+
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   }
 }

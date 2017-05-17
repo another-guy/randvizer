@@ -4,7 +4,7 @@ Try [Randvizer](http://soloydenko.com/randvizer/) online - Visualize Random Numb
 
 ## Status
 
-Current version is 0.0.3
+Current version is 0.0.4
 
 ## Motivation
 
